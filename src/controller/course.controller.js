@@ -1,4 +1,5 @@
 import { Course } from "../models/course.model.js";
+import {Category} from '../models/category.model.js'
 import { catchError } from "../utils/error-response.js";
 import { CourseValidation } from "../validation/course.validation.js";
 
@@ -102,6 +103,25 @@ export class CourseController {
       });
     } catch (error) {
       return catchError(res, 500, error.message);
+    }
+  }
+
+  async getByFilter(req, res){
+    try {
+      const {category, price} = req.query
+      const categoryData = await Category.findOne({name:category})
+      const course = await Course.find({
+        price:parseFloat(price),
+        categoryId:categoryData._id
+      })
+
+      return res.status(200).json({
+        statusCode:200,
+        message:'success',
+        data:course
+      })
+    } catch (error) {
+      return catchError(res, 500, error.message)
     }
   }
 

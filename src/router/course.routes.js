@@ -10,6 +10,7 @@ const controller = new CourseController()
 router
     .post("/", JwtAuthGuard, AuthorGuard, controller.createCourse)
     .get('/', controller.getAllCourse)
+    .get('/filter', controller.getByFilter)
     .get('/:id', controller.getByIdCourse)
     .put("/:id", JwtAuthGuard, AuthorGuard, controller.updateCourseById)
     .delete("/:id", JwtAuthGuard, AdminGuard, controller.deleteByIdCourse)  

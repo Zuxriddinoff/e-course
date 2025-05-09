@@ -161,7 +161,16 @@ export class UserController{
 
     async getAllUsers(req, res){
       try {
-        const user = await User.find({role:'user'}).populate("Enrollment")
+        const user = await User.find({role:'user'})
+        .populate({
+          path: 'Enrollment',
+          populate: {
+            path: 'course_id', 
+            model: 'Course'
+          }
+        });
+
+
         return res.status(201).json({
           statusCode: 201,
           message: 'success',
@@ -184,8 +193,7 @@ export class UserController{
         return catchError(res, 500, error.message)
       }
     }
-
-
+    
     
     async getById(req, res){
       try {
@@ -387,7 +395,14 @@ export class UserController{
 
     static async findById(res, id) {
       try {
-        const admin = await User.findById(id).populate('Enrollment Course');
+        const admin = await User.findById(id).populate('Course')
+        .populate({
+          path: 'Enrollment',
+          populate: {
+            path: 'course_id', 
+            model: 'Course'
+          }
+        });;
         if (!admin) {
           return catchError(res, 404, `Not found by ID ${id}`);
         }

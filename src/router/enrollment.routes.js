@@ -9,6 +9,7 @@ const controller = new EnrollmentController()
 
 router
     .post("/",JwtAuthGuard, UserGuard, controller.createEnnrolment)
+    .post("/confirm-enrollment", controller.confirmEnrollment)
     .get('/', JwtAuthGuard, UserGuard, controller.getAllEnrollment)
     .get('/:id',JwtAuthGuard, UserGuard, controller.getByIdEnrollment)
     .put("/:id", JwtAuthGuard, AdminGuard, controller.updateEnrollmentById)

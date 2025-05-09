@@ -112,8 +112,8 @@ export class CourseController {
       const categoryData = await Category.findOne({name:category})
       const course = await Course.find({
         price:parseFloat(price),
-        categoryId:categoryData._id
-      })
+        category:categoryData._id
+      }).populate('author')
 
       return res.status(200).json({
         statusCode:200,

@@ -162,13 +162,13 @@ export class UserController{
     async getAllUsers(req, res){
       try {
         const user = await User.find({role:'user'})
-        // .populate({
-        //   path: 'Enrollment',
-        //   populate: {
-        //     path: 'course_id', 
-        //     model: 'Course'
-        //   }
-        // });
+        .populate({
+          path: 'Enrollment',
+          populate: {
+            path: 'course_id', 
+            model: 'Course'
+          }
+        });
 
 
         return res.status(200).json({
